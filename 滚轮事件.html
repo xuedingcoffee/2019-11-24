@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            width: 100px;
+            height: 100px;
+            background: lightseagreen;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <script>
+        // onmousewheel  滚轮事件   
+        //ev.wheelDelta  >0 向上   <0 向下
+        //FF:DOMMouseScroll  注意这个事件只能用绑定的事件去写   >0 向下   <0 向上
+
+        // window.onmousewheel = function (ev) {
+        //     if (ev.wheelDelta > 0) {
+        //         console.log('向上走')
+        //         box.style.top = box.offsetTop + 5 + 'px';
+        //     }
+        //     else {
+        //         console.log('向下走')
+        //         box.style.top = box.offsetTop - 5 + 'px';
+        //     }
+        // }
+        // //火狐
+        // window.addEventListener = ('DOMMouseScroll', function (ev) {
+        //     if (ev.detail > 0) {
+        //         console.log('向下走')
+        //         box.style.top = box.offsetTop + 5 + 'px';
+        //     }
+        //     else {
+        //         console.log('向上走')
+        //         box.style.top = box.offsetTop - 5 + 'px';
+        //     }
+        // })
+
+
+
+        function addwheel(obj, cb) {
+            if (obj.onmousewheel === null) {//说明有这个事件  undefined是没有
+                obj.onmousewheel = listen;
+            }
+            else {
+                obj.addEventListener('DOMMouseScroll', listen)//用绑定事件函数
+            }
+
+
+            //因为火狐和欧鹏方向不一样
+
+            function listen(ev) {
+                let o = false;//默认向下
+                if (ev.wheelDelta) {
+                    o = ev.wheelDelta > 0 ? true : false;
+                }
+                else {
+                    o = ev.detail < 0 ? true : false;
+                }
+                cb.call(this, o)//一定要执行  别忘记它  不加call指的是window 但是执行此函数的是obj
+
+            }
+        };
+        addwheel(box, function (o) {  //o是指方向
+            let { width } = getComputedStyle(this)
+            let { height } = getComputedStyle(this)
+            if (o) { //o成立，就向上
+                this.style.width = parseFloat(width) + 5 + 'px';
+                this.style.height = parseFloat(height) + 5 + 'px';
+            }
+            else {//o不成立，就向下
+                this.style.width = parseFloat(width) - 5 + 'px';
+                this.style.height = parseFloat(height) - 5 + 'px';
+            }
+
+        });
+
+    </script>
+</body>
+
+</html>

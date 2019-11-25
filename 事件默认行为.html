@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body style="height: 3000px;">
+        <a href="http://www.baidu.com" id="aa">去百度</a>
+    <script>
+        //1.ev.returnValue = false;  去阻止默认行为（灵活）
+        //2.return false
+        //3.ev.preventDefault(); (事件绑定的时候使用或者returnValue)
+  
+  
+    // document.onkeydown=function(ev){
+    //    //浏览器默认按空格键，会自动滑轮。要阻止浏览器的默认行为
+    //    if(keycode===32){
+    //        return false;   //阻止这个空格的默认行为
+    //        ev.returnValue=false;//去阻止默认行为（灵活）
+    //    }
+    //    return false;//阻止点击事件中所有浏览器的默认行为
+    // }
+
+// aa.onclick=function(){
+//     return false;
+// }
+aa.addEventListener('click',function(ev){
+    ev.preventDefault(); //(事件绑定的时候使用或者returnValue)
+})
+
+
+
+
+
+
+    </script>
+</body>
+</html>
